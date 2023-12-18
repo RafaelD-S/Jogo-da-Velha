@@ -53,14 +53,22 @@ export default function Jogo() {
 
     const teste = (id) => {
         setQuadrados(item => item.map(
-            e => e.id === id && e.valor === '' && suaVez ? {valor: xSVG} : e.id === id && e.valor === '' && suaVez === false ? {valor: bolaSVG} : e
+            e => e.id === id && e.valor === '' && suaVez ? ({valor: xSVG}) : e.id === id && e.valor === '' && suaVez === false ? {valor: bolaSVG} : e
         ));
-        if(suaVez) {
-            setSuaVez(false)
-        } else {
-            setSuaVez(true)
-        }
+
+        quadrados[id].valor == '' ? suaVez ? setSuaVez(false) : setSuaVez(true) : console.log("fudeu")
+
+        // if(suaVez && quadrados[id].valor == '') {
+        //     setSuaVez(false)
+        //     console.log(suaVez)
+        // } else if(suaVez === false && quadrados[id].valor == '') {
+        //     setSuaVez(true)
+        //     console.log(suaVez)
+        // } else {
+        //     console.log("deu erro")
+        // }
     }
+
 
     const resetar = () => {
         setQuadrados()
