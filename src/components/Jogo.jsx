@@ -42,6 +42,7 @@ export default function Jogo() {
         }
     ])
     const[vazio, setVazio] = useState(quadrados)
+    const[selecionados, setSeleciondos] = useState(0)
 
     const [suaVez, setSuaVez] = useState(true)
 
@@ -50,7 +51,8 @@ export default function Jogo() {
         setQuadrados(item => item.map(
             e => e.id === id && e.valor === '' && suaVez ? ({valor: 'X'}) : e.id === id && e.valor === '' && suaVez === false ? {valor: 'O'} : e
         ));
-
+        
+        setSeleciondos(selecionados + 1)
         quadrados[id].valor == '' ? suaVez ? setSuaVez(false) : setSuaVez(true) : console.log("fudeu")
     }
 
@@ -58,6 +60,7 @@ export default function Jogo() {
         setQuadrados(vazio)
         setPrimeiroPontos('0')
         setSegundoPontos('0')
+        setSeleciondos(0)
     }
 
     const[aparecerResultado, setAparecerResultado] = useState("100%")
@@ -68,8 +71,9 @@ export default function Jogo() {
     
     const vitoria = (vencedor) => {
         setAparecerResultado('0%')
+        setSeleciondos(0)
         
-        vencedor === 'X' ? setPrimeiroPontos(+primeiroPontos + 1) : setSegundoPontos(+segundoPontos + 1)
+        vencedor === 'X' ? setPrimeiroPontos(+primeiroPontos + 1) : vencedor === 'O' ? setSegundoPontos(+segundoPontos + 1) : ''
         
         setTimeout(() => {
             setAparecerResultado('100%')
@@ -119,6 +123,9 @@ export default function Jogo() {
         ) {
             vitoria(quadrados[8].valor)
             setResultado(quadrados[8].valor + " Venceu")
+        } else if(selecionados === 9) {
+            vitoria('velha')
+            setResultado("Velha")
         }
     }, [quadrados])
 
