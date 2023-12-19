@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   user-select: none;
+  font-family: cursive;
 }
 body {
   background-color: #108554;
@@ -12,48 +13,54 @@ body {
   justify-content: center;
 }
 section:nth-child(1) {
+  position: relative;
   display: grid;
   grid-template-columns: 150px 150px 150px;
   grid-template-rows: 150px 150px 150px;
 }
-section:nth-child(1) figure {
+section:nth-child(1) div {
   margin: 2px;
+  cursor: pointer;
   background-color: #126945;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #b8fadd;
+  font-size: 5rem;
 }
-figure img {
-  width: 80%;
-  filter: invert(97%) sepia(8%) saturate(1427%) hue-rotate(74deg) brightness(106%) contrast(96%);
-}
-
 section:nth-child(2) {
   margin: 1rem;
   height: 450px;
+  max-width: 300px;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: space-evenly;
   background-color: #126945;
+  padding: 1rem 0;
   position: relative;
 }
 section:nth-child(2) article {
   display: flex;
   flex-direction: column;
   height: 30%;
-  width: 25vw;
+  width: 100%;
 }
-section:nth-child(2) figure {
+section:nth-child(2) div {
   display: flex;
-  font-family: cursive;
-  justify-content: center;
+  justify-content: space-evenly;
+  max-width: 7rem;
+  width: 100%;
   color: #b8fadd;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.5rem;
+}
+section:nth-child(2) h2 {
+  font-size: 3.5rem;
 }
 input {
   background-color: transparent;
+  width: 100%;
   text-transform: uppercase;
   font-family: cursive;
   padding: .75rem 0;
@@ -64,7 +71,10 @@ input {
   background-color: #11563a;
   border-block: 2px solid #03301f;
 }
-/* section:nth-child(2) button {
+input::placeholder {
+  color: #b8fadd23;
+}
+section:nth-child(2) button {
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -73,4 +83,73 @@ input {
   color: #b8fadd;
   right: 17px;
   font-size: 1.75rem;
-} */
+}
+section:nth-child(1) .gavetaDeVitoria {
+  background-color: #11563a;
+  text-transform: uppercase;
+  color: #eefbf3;
+  word-spacing: 15px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  transition: bottom .3s ease-in-out .4s;
+}
+@media(max-width: 800px) {
+
+  body {
+    flex-direction: column-reverse;
+  }
+  section:nth-child(1) {
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+  }
+  section:nth-child(1) div {
+    font-size: 3rem;
+  }
+  section:nth-child(1) .gavetaDeVitoria {
+    font-size: 2rem;
+    word-spacing: 10px;
+  }
+  section:nth-child(2) {
+    flex-direction: row;
+    height: fit-content;
+    width: 296px;
+    padding: 0;
+    margin: 0;
+    position: initial;
+  }
+  section:nth-child(2) h2 {
+    font-size: 1rem;
+  }
+  section:nth-child(2) h3 {
+    font-size: .75rem;
+  }
+  section:nth-child(2) article {
+    height: fit-content;
+    flex-direction: row;
+    gap: 2px;
+    width: 30rem;
+  }
+  section:nth-child(2) article input {
+    padding: .25rem;
+    font-size: .6rem;
+    border: none;
+    height: 2.25rem
+  }
+}
+@media(max-width: 320px) {
+  section:nth-child(1) {
+    grid-template-columns: 80px 80px 80px;
+    grid-template-rows: 80px 80px 80px;
+  }
+  section:nth-child(2) {
+    width: 236px;
+  }
+
+}
