@@ -53,7 +53,7 @@ export default function Jogo() {
         ));
         
         setSeleciondos(selecionados + 1)
-        quadrados[id].valor == '' ? suaVez ? setSuaVez(false) : setSuaVez(true) : console.log("fudeu")
+        quadrados[id].valor == '' ? suaVez ? setSuaVez(false) : setSuaVez(true) : console.log("deu errado")
     }
 
     const resetar = () => {
@@ -61,11 +61,16 @@ export default function Jogo() {
         setPrimeiroPontos('0')
         setSegundoPontos('0')
         setSeleciondos(0)
+        setSuaVez(true)
     }
 
     const[aparecerResultado, setAparecerResultado] = useState("100%")
     const[primeiroPontos, setPrimeiroPontos] = useState('0')
     const[segundoPontos, setSegundoPontos] = useState('0')
+    const[primeiroCor, setPrimeiroCor] = useState('transparent')
+    const[primeiroBrd, setPrimeiroBrd] = useState('none')
+    const[segundoCor, setSegundoCor] = useState('transparent')
+    const[segundoBrd, setSegundoBrd] = useState('none')
 
     const[resultado, setResultado] = useState('')
     
@@ -129,6 +134,21 @@ export default function Jogo() {
         }
     }, [quadrados])
 
+    useEffect(() => {
+        
+        if(suaVez) {
+            setPrimeiroCor('#10855465')
+            setPrimeiroBrd('2px solid #65f0bc')
+            setSegundoBrd('none')
+            setSegundoCor('transparent')
+        } else {
+            setSegundoCor('#10855465')
+            setSegundoBrd('2px solid #65f0bc')
+            setPrimeiroBrd('none')
+            setPrimeiroCor('transparent')
+        }
+        
+    }, [suaVez])
     return (
         <body>
             <section>
@@ -139,19 +159,28 @@ export default function Jogo() {
                 {resultado}
             </div>
             </section>
-            {<Jogador resetar={resetar} primeiroPontos={primeiroPontos} segundoPontos={segundoPontos}/>}
+            {<Jogador 
+            resetar={resetar} 
+            primeiroPontos={primeiroPontos} 
+            segundoPontos={segundoPontos} 
+            
+            primeiroCor={primeiroCor} 
+            primeiroBrd={primeiroBrd}
+            segundoBrd={segundoBrd}
+            segundoCor={segundoCor}
+            />}
         </body>
     )
 }
 
-export function Jogador({resetar, primeiroPontos, segundoPontos}) {
+export function Jogador({resetar, primeiroPontos, segundoPontos, primeiroCor, primeiroBrd, segundoBrd, segundoCor}) {
 
     const[primeiroJog, setPrimeiroJog] = useState()
     const[segundoJog, setSegundoJog] = useState()
 
     return (
         <section>
-            <div>
+            <div style={{backgroundColor: primeiroCor, borderLeft: primeiroBrd}}>
                 <button onClick={resetar}>
                     ↻
                 </button>
@@ -166,7 +195,7 @@ export function Jogador({resetar, primeiroPontos, segundoPontos}) {
                 <input type="text" placeholder='JOGADOR 1' onChange={(e) => setPrimeiroJog(e.target.value)}/>
                 <input type="text" placeholder='JOGADOR 2' onChange={(e) => setSegundoJog(e.target.value)}/>
             </article>
-            <div>
+            <div style={{backgroundColor: segundoCor, borderLeft: segundoBrd}}>
                 <h3>
                     {segundoPontos}
                 </h3>
