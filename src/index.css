@@ -111,6 +111,7 @@ section:nth-child(1) .gavetaDeVitoria {
   }
   section:nth-child(1) div {
     font-size: 3rem;
+    cursor: default;
   }
   section:nth-child(1) .gavetaDeVitoria {
     font-size: 2rem;
