@@ -1,8 +1,4 @@
-import { useState } from "react"
-import bolaSVG from '../assets/bola.svg'
-import bolaPNG from '../assets/bola.png'
-import xSVG from '../assets/x.svg'
-import xPNG from '../assets/x.png'
+import { useEffect, useState } from "react"
 
 
 export default function Jogo() {
@@ -45,69 +41,132 @@ export default function Jogo() {
         valor: ''
         }
     ])
-
-    // () => console.log(quadrados[e.id].valor)
-    // () => setQuadrados[e.id].valor("X")
+    const[vazio, setVazio] = useState(quadrados)
 
     const [suaVez, setSuaVez] = useState(true)
 
+    
     const teste = (id) => {
         setQuadrados(item => item.map(
-            e => e.id === id && e.valor === '' && suaVez ? ({valor: xSVG}) : e.id === id && e.valor === '' && suaVez === false ? {valor: bolaSVG} : e
+            e => e.id === id && e.valor === '' && suaVez ? ({valor: 'X'}) : e.id === id && e.valor === '' && suaVez === false ? {valor: 'O'} : e
         ));
 
         quadrados[id].valor == '' ? suaVez ? setSuaVez(false) : setSuaVez(true) : console.log("fudeu")
-
-        // if(suaVez && quadrados[id].valor == '') {
-        //     setSuaVez(false)
-        //     console.log(suaVez)
-        // } else if(suaVez === false && quadrados[id].valor == '') {
-        //     setSuaVez(true)
-        //     console.log(suaVez)
-        // } else {
-        //     console.log("deu erro")
-        // }
     }
-
 
     const resetar = () => {
-        setQuadrados()
+        setQuadrados(vazio)
+        setPrimeiroPontos('0')
+        setSegundoPontos('0')
     }
+
+    const[aparecerResultado, setAparecerResultado] = useState("100%")
+    const[primeiroPontos, setPrimeiroPontos] = useState('0')
+    const[segundoPontos, setSegundoPontos] = useState('0')
+
+    const[resultado, setResultado] = useState('')
+    
+    const vitoria = (vencedor) => {
+        setAparecerResultado('0%')
+        
+        vencedor === 'X' ? setPrimeiroPontos(+primeiroPontos + 1) : setSegundoPontos(+segundoPontos + 1)
+        
+        setTimeout(() => {
+            setAparecerResultado('100%')
+            setQuadrados(vazio)
+        }, 1250)
+    }
+
+    useEffect(() => {
+        if(
+            quadrados[0].valor === quadrados[1].valor 
+            && quadrados[0].valor === quadrados[2].valor 
+            && quadrados[0].valor != '' 
+            ||
+            quadrados[0].valor === quadrados[3].valor 
+            && quadrados[0].valor === quadrados[6].valor 
+            && quadrados[0].valor != '' 
+        ) {
+            vitoria(quadrados[0].valor)
+            setResultado(quadrados[0].valor + " Venceu")
+        } else if(
+            quadrados[3].valor === quadrados[4].valor 
+            && quadrados[3].valor === quadrados[5].valor 
+            && quadrados[3].valor != ''
+            ||
+            quadrados[1].valor === quadrados[4].valor 
+            && quadrados[1].valor === quadrados[7].valor 
+            && quadrados[1].valor != ''
+            ||
+            quadrados[0].valor === quadrados[4].valor 
+            && quadrados[0].valor === quadrados[8].valor 
+            && quadrados[0].valor != ''
+            ||
+            quadrados[2].valor === quadrados[4].valor 
+            && quadrados[2].valor === quadrados[6].valor 
+            && quadrados[2].valor != ''
+        ) {
+            vitoria(quadrados[4].valor)
+            setResultado(quadrados[4].valor + " Venceu")
+        } else if(
+            quadrados[6].valor === quadrados[7].valor 
+            && quadrados[6].valor === quadrados[8].valor 
+            && quadrados[6].valor != ''
+            ||
+            quadrados[2].valor === quadrados[5].valor 
+            && quadrados[2].valor === quadrados[8].valor 
+            && quadrados[2].valor != ''
+        ) {
+            vitoria(quadrados[8].valor)
+            setResultado(quadrados[8].valor + " Venceu")
+        }
+    }, [quadrados])
 
     return (
         <body>
             <section>
                 {quadrados.map((e) => (
-                    <figure key={e.id} onClick={() => teste(e.id)}> <img src={e.valor} alt="" /></figure>
+                    <div key={e.id} onClick={() => teste(e.id)}> {e.valor}</div>
                 ))}
+            <div className="gavetaDeVitoria" style={{bottom: aparecerResultado}}>
+                {resultado}
+            </div>
             </section>
-            {<Jogador resetar={resetar}/>}
+            {<Jogador resetar={resetar} primeiroPontos={primeiroPontos} segundoPontos={segundoPontos}/>}
         </body>
     )
 }
 
-export function Jogador({resetar}) {
+export function Jogador({resetar, primeiroPontos, segundoPontos}) {
+
+    const[primeiroJog, setPrimeiroJog] = useState()
+    const[segundoJog, setSegundoJog] = useState()
+
     return (
         <section>
-            <figure>
-                {/* <button onClick={resetar}>
+            <div>
+                <button onClick={resetar}>
                     ↻
-                </button> */}
-                <figcaption>
-                    0
-                </figcaption>
-                <img src={xSVG} alt="" />
-            </figure>
+                </button>
+                <h3>
+                    {primeiroPontos}
+                </h3>
+                <h2>
+                    X
+                </h2>
+            </div>
             <article>
-                <input type="text" defaultValue='JOGADOR 1'/>
-                <input type="text" defaultValue='JOGADOR 2'/>
+                <input type="text" placeholder='JOGADOR 1' onChange={(e) => setPrimeiroJog(e.target.value)}/>
+                <input type="text" placeholder='JOGADOR 2' onChange={(e) => setSegundoJog(e.target.value)}/>
             </article>
-            <figure>
-                <figcaption>
-                    0
-                </figcaption>
-                <img src={bolaSVG} alt="" />
-            </figure>
+            <div>
+                <h3>
+                    {segundoPontos}
+                </h3>
+                <h2>
+                    O
+                </h2>
+            </div>
         </section>
     )
 }
