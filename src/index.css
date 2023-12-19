@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Bubbles&display=swap');
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   user-select: none;
-  font-family: cursive;
+  font-family: 'Rubik Bubbles', sans-serif;
 }
 body {
   background-color: #108554;
@@ -62,7 +63,7 @@ input {
   background-color: transparent;
   width: 100%;
   text-transform: uppercase;
-  font-family: cursive;
+  font-family: 'Rubik Bubbles', sans-serif;
   padding: .75rem 0;
   font-size: 1.75rem;
   color: #dafeef;
@@ -98,7 +99,7 @@ section:nth-child(1) .gavetaDeVitoria {
   align-items: center;
   justify-content: center;
   font-size: 3rem;
-  transition: bottom .3s ease-in-out .4s;
+  transition: bottom .3s ease-in-out .1s;
 }
 @media(max-width: 800px) {
 
